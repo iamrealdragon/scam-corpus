@@ -1,0 +1,281 @@
+# config/outlets.yaml
+# 매체 레지스트리. tier1 = 1차 코퍼스 매체(전수 실측 검증 완료), tier2 = 표본 확장 후보(미검증, 착수 전 별도 검증 필요).
+#
+# 검증 방법 (2026-07-20): seeds/existing_120.csv의 "본문 확인" 27건 중 매체별 2~3개 URL을
+# requests + User-Agent 명시로 정적 HTTP GET → trafilatura.extract()로 본문 추출 시도.
+# 8개 매체 전부 정적 HTTP만으로 본문 추출 성공 (Playwright 불필요).
+# ※ CLAUDE.md는 "Kumparan 등 JS 의존 매체는 Playwright"로 가정했으나, 실측 결과 Kumparan도
+#   정적 HTML에 본문이 서버사이드 렌더링되어 있어 requests만으로 충분함이 확인됨 (실측 우선, 가정 폐기).
+#
+# 셀렉터 확정 규칙:
+# - title: 8개 매체 모두 페이지당 <h1> 태그가 정확히 1개뿐이라 "h1" 단일 셀렉터로 통일.
+# - date: 8개 매체 모두 <script type="application/ld+json">의 datePublished 필드가 안정적으로 존재/작동
+#   (Tirto만 예외 — published_time 계열 메타 없음, article:modified_time으로 근사 후 본문에서 재확인 필요).
+# - body: CSS 클래스 셀렉터. Kumparan은 styled-components 해시 클래스라 CSS 셀렉터가 배포마다 깨질 수 있어
+#   trafilatura 폴백에 의존(strategy: trafilatura_fallback)하도록 표시.
+
+fetch:
+  user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36 (academic research crawler; contact fbekfgjs@hufs.ac.kr)"
+  request_delay_seconds: 2
+  per_domain_backoff_seconds: 5
+  respect_robots_txt: true
+  retry: 2
+
+tier1:
+  antara:
+    name: ANTARA
+    codebook_code: 1        # A02 매체명 코드
+    media_type_code: 1       # A03 매체 유형: 1 통신사
+    domains:
+      - antaranews.com
+    regional_subdomains:     # CLAUDE.md 3.1: 지역판이 별도 서브도메인 사용
+      - jabar.antaranews.com
+      - megapolitan.antaranews.com
+      - sulteng.antaranews.com
+      - jateng.antaranews.com
+      - jambi.antaranews.com
+      - ambon.antaranews.com
+    tag_pages:
+      - https://www.antaranews.com/tag/wni-online-scam
+      - https://www.antaranews.com/tag/wni-di-myawaddy
+    fetch_method: http       # 검증 완료: requests만으로 충분
+    multi_page_param: "?page=all"
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+        fallback: 'meta[property="article:published_time"]'
+      body: ".post-content"
+    verified_on:
+      - url: "https://www.antaranews.com/berita/3560850/sejumlah-wni-yang-paspornya-ditahan-di-laos-telah-dipulangkan"
+        status: 200
+        body_chars: 2024
+      - url: "https://www.antaranews.com/berita/3624765/kemlu-telah-tangani-sedikitnya-2300-kasus-wni-korban-online-scam"
+        status: 200
+        body_chars: 2522
+      - url: "https://www.antaranews.com/berita/3646128/ada-lebih-2400-kasus-wni-korban-perdagangan-orang-dalam-dua-tahun"
+        status: 200
+        body_chars: 2705
+
+  detik:
+    name: Detik
+    codebook_code: 2
+    media_type_code: 2        # 2 온라인뉴스 (지역/특화 서브섹션은 A03에서 4 지역판으로 별도 코딩)
+    domains:
+      - detik.com
+      - news.detik.com
+    regional_subdomains:
+      - detik.com/jogja
+      - news.detik.com/bbc-world   # BBC Indonesia 재게시 — A02는 9 기타로 별도 코딩 검토
+    fetch_method: http
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+      body: ".detail__body-text"
+    verified_on:
+      - url: "https://news.detik.com/berita/d-6723724/tersangka-tppo-di-myanmar-iming-imingi-25-wni-gaji-rp-12-juta"
+        status: 200
+        body_chars: 2649
+      - url: "https://news.detik.com/bbc-world/d-7261730/keluarga-wni-korban-sindikat-penipuan-di-myanmar-tuntut-kepastian"
+        status: 200
+        body_chars: 16149
+        note: "detail__body-text 셀렉터에 관련기사 박스가 포함돼 길게 잡힘 — extract.py에서 첫 article 컨테이너로 스코프 제한 필요"
+      - url: "https://news.detik.com/berita/d-7835416/sindikat-scam-online-wni-di-myanmar-tawari-korban-jadi-cs-gaji-belasan-juta"
+        status: 200
+        body_chars: 2519
+
+  cnn_indonesia:
+    name: CNN Indonesia
+    codebook_code: 3
+    media_type_code: 3        # 3 방송계열
+    domains:
+      - cnnindonesia.com
+    fetch_method: http
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+      body: ".detail-text"
+    verified_on:
+      - url: "https://www.cnnindonesia.com/internasional/20221212065826-106-886116/34-wni-korban-perusahaan-scam-di-kamboja-diselamatkan"
+        status: 200
+        body_chars: 1798
+      - url: "https://www.cnnindonesia.com/internasional/20230505164025-106-945839/menlu-klaim-perdagangan-manusia-kian-subur-di-asia-tenggara"
+        status: 200
+        body_chars: 4860
+      - url: "https://www.cnnindonesia.com/internasional/20230505164445-106-945841/kbri-manila-evakuasi-143-wni-korban-online-scam"
+        status: 200
+        body_chars: 3287
+
+  liputan6:
+    name: Liputan6
+    codebook_code: 4
+    media_type_code: 2
+    domains:
+      - liputan6.com
+    fetch_method: http
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+        note: "페이지 내 <time class=megamenu--news__item__published>는 연관기사 위젯 날짜라 오탐 위험 — 반드시 ld+json 사용"
+      body: ".article-content"
+    verified_on:
+      - url: "https://www.liputan6.com/news/read/5995737/larangan-wni-kerja-di-thailand-myanmar-kamboja-dan-kisah-pilu-korban-tppo-sindikat-scamming"
+        status: 200
+        body_chars: 7212
+      - url: "https://www.liputan6.com/cek-fakta/read/6116189/calon-pekerja-migran-hindarilah-tawaran-kerja-yang-berujung-tppo"
+        status: 200
+        body_chars: 4835
+        note: "Cek Fakta 서브섹션 — A06 기사유형은 6 팩트체크로 코딩"
+      - url: "https://www.liputan6.com/news/read/6245411/modus-perdagangan-orang-wni-di-kamboja-dijanjikan-kerja-operator-komputer-bergaji-rp-9-juta"
+        status: 200
+        body_chars: 2958
+
+  tirto:
+    name: Tirto
+    codebook_code: 5
+    media_type_code: 2
+    domains:
+      - tirto.id
+    fetch_method: http
+    selectors:
+      title: "h1"
+      date:
+        strategy: meta
+        meta_property: "article:modified_time"
+        note: "발행일(published_time) 메타 부재 — modified_time으로 근사. extract.py에서 access_status 메모에 근사치임을 표시"
+      body: ".content-text-editor"
+      body_note: ".article-body는 'Jadikan tirto.id sumber pilihan pencarian Google' 안내문구가 섞여 들어가 .content-text-editor를 우선 사용"
+    verified_on:
+      - url: "https://tirto.id/kemlu-pulangkan-14-wni-korban-penipuan-dari-kamboja-guXo"
+        status: 200
+        body_chars: 1450
+      - url: "https://tirto.id/339-wni-ditangkap-di-kamboja-diduga-terlibat-penipuan-online-heEM"
+        status: 200
+        body_chars: 2642
+      - url: "https://tirto.id/alasan-kemlu-tak-semua-wni-di-kamboja-myanmar-ditampung-kbri-hkuL"
+        status: 200
+        body_chars: 3222
+
+  kumparan:
+    name: Kumparan
+    codebook_code: 6
+    media_type_code: 2
+    domains:
+      - kumparan.com
+    fetch_method: http    # 검증 결과 Playwright 불필요 (본문 서버사이드 렌더링됨)
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+      body:
+        strategy: trafilatura_fallback
+        note: "본문 컨테이너가 styled-components 해시 클래스(예: StoryRenderer__EditorWrapper-sc-1f9fbz3-0)라 배포마다 깨질 위험 — CSS 셀렉터 대신 trafilatura 범용 추출 사용. 구조적 위치는 article>main."
+    verified_on:
+      - url: "https://kumparan.com/kumparannews/pilu-9-wni-diperdaya-jadi-scammer-di-kamboja-1-orang-hamil-6-bulan-disiksa-26Vo5FdBOeh"
+        status: 200
+        body_chars: 4397
+      - url: "https://kumparan.com/kumparannews/polri-600-wni-masih-terjebak-jaringan-online-scam-di-kamboja-26Vq4trUWdZ"
+        status: 200
+        body_chars: 3761
+      - url: "https://kumparan.com/kumparannews/kamboja-intensifkan-operasi-antiscam-308-wni-minta-dideportasi-ke-indonesia-26f77ci4wEQ"
+        status: 200
+        body_chars: 2794
+
+  cnbc_indonesia:
+    name: CNBC Indonesia
+    codebook_code: 7
+    media_type_code: 2
+    domains:
+      - cnbcindonesia.com
+    fetch_method: http
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+      body: ".detail-text"
+    verified_on:
+      - url: "https://www.cnbcindonesia.com/news/20241019160011-4-581050/dubes-ri-di-thailand-buka-suara-online-scam-internasional-seret-wni"
+        status: 200
+        body_chars: 2249
+      - url: "https://www.cnbcindonesia.com/news/20250318133957-4-619591/pemerintah-ri-pulangkan-554-wni-korban-online-scam-di-myanmar"
+        status: 200
+        body_chars: 4612
+      - url: "https://www.cnbcindonesia.com/news/20251020165524-4-677608/97-wni-terlibat-kerusuhan-di-kamboja-pemerintah-ri-buka-suara"
+        status: 200
+        body_chars: 2807
+
+  suara:
+    name: Suara
+    codebook_code: 8
+    media_type_code: 2
+    domains:
+      - suara.com
+    fetch_method: http
+    selectors:
+      title: "h1"
+      date:
+        strategy: ld_json
+        json_field: datePublished
+      body: ".article-content"
+    verified_on:
+      - url: "https://www.suara.com/tekno/2022/10/07/224052/sebanyak-934-wni-jadi-korban-online-scam-di-asia-tenggara"
+        status: 200
+        body_chars: 2695
+      - url: "https://www.suara.com/news/2023/09/24/215700/2-wni-dijadikan-penipu-online-di-kamboja-begini-kata-kbri-phnom-penh"
+        status: 200
+        body_chars: 1667
+      - url: "https://www.suara.com/news/2026/02/09/191126/terjebak-perdagangan-orang-249-wni-dipaksa-kerja-18-jam-di-kambojamyanmar"
+        status: 200
+        body_chars: 2792
+
+# 표본 확장 후보 (CLAUDE.md 3.1). 아직 fetch 검증 안 함 — 착수 전 tier1과 동일한 방식으로 검증 필요.
+tier2:
+  kompas:
+    name: Kompas
+    codebook_code: 9
+    domains: [kompas.com]
+    fetch_method: unverified
+  tribunnews:
+    name: Tribunnews
+    codebook_code: 9
+    domains: [tribunnews.com]
+    fetch_method: unverified
+  republika:
+    name: Republika
+    codebook_code: 9
+    domains: [republika.co.id]
+    fetch_method: unverified
+  media_indonesia:
+    name: Media Indonesia
+    codebook_code: 9
+    domains: [mediaindonesia.com]
+    fetch_method: unverified
+  sindonews:
+    name: Sindonews
+    codebook_code: 9
+    domains: [sindonews.com]
+    fetch_method: unverified
+  viva:
+    name: Viva
+    codebook_code: 9
+    domains: [viva.co.id]
+    fetch_method: unverified
+  okezone:
+    name: Okezone
+    codebook_code: 9
+    domains: [okezone.com]
+    fetch_method: unverified
+  jpnn:
+    name: JPNN
+    codebook_code: 9
+    domains: [jpnn.com]
+    fetch_method: unverified

@@ -1,0 +1,32 @@
+# config/queries.yaml
+# 발견(discovery) 단계 검색어 세트 (CLAUDE.md 3.3). 기간 파라미터는 date_range로 관리.
+
+date_range:
+  start: "2022-01-01"
+  end: null   # null = 현재까지
+
+base_queries:
+  - "WNI korban online scam Kamboja"
+  - "WNI online scam Myanmar"
+  - "lowongan kerja Kamboja admin online"
+  - "operator komputer gaji Kamboja"
+  - "WNI Myawaddy"
+  - "korban TPPO scam"
+  - "WNI dipulangkan scam"
+  - "judi online WNI"
+  - "perdagangan orang online scam"
+
+term_variants:
+  # 철자 변형 - base_queries의 'scam' 자리에 순환 대입
+  - scam
+  - scamming
+  - scammer
+  - penipuan daring
+  - penipuan online
+
+tag_pages:
+  antara:
+    - https://www.antaranews.com/tag/wni-online-scam
+    - https://www.antaranews.com/tag/wni-di-myawaddy
+  detik:
+    - https://www.detik.com/tag/wni-korban-online-scams

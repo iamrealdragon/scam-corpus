@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# macOS
+.DS_Store
+
+# 대용량 원본 HTML (재수집 가능, 대시보드에 불필요)
+data/raw_html/
+
+# 크롤링 로그
+logs/*.jsonl
+
+# 임시
+/tmp/
+*.tmp

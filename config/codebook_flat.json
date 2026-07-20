@@ -1,0 +1,1643 @@
+{
+  "source": "SSCI_온라인스캠센터_내용분석_3개국어_코드북.xlsx :: Codebook_KR",
+  "unit_of_analysis": "개별 뉴스기사",
+  "variable_count": 63,
+  "variables": [
+    {
+      "variable_id": "A01",
+      "dimension": "기사 메타데이터",
+      "name": "기사 ID",
+      "type": "Text",
+      "definition": "각 기사에 부여한 고유번호.",
+      "coding_rule": "A001, D023, CN045 등 안정적인 ID를 부여한다.",
+      "example": "D023",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "A02",
+      "dimension": "기사 메타데이터",
+      "name": "매체명",
+      "type": "Categorical",
+      "definition": "뉴스를 발행한 매체명.",
+      "coding_rule": "포털이나 재게시자가 아니라 원 발행 매체를 코딩한다.",
+      "example": "2 Detik",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "ANTARA"
+        },
+        {
+          "code": 2,
+          "label": "Detik"
+        },
+        {
+          "code": 3,
+          "label": "CNN Indonesia"
+        },
+        {
+          "code": 4,
+          "label": "Liputan6"
+        },
+        {
+          "code": 5,
+          "label": "Tirto"
+        },
+        {
+          "code": 6,
+          "label": "Kumparan"
+        },
+        {
+          "code": 7,
+          "label": "CNBC Indonesia"
+        },
+        {
+          "code": 8,
+          "label": "Suara"
+        },
+        {
+          "code": 9,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "A03",
+      "dimension": "기사 메타데이터",
+      "name": "매체 유형",
+      "type": "Categorical",
+      "definition": "매체의 제도적 성격.",
+      "coding_rule": "ANTARA daerah, Detik daerah 등 지역판은 지역판으로 코딩한다.",
+      "example": "4 Regional edition",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "통신사"
+        },
+        {
+          "code": 2,
+          "label": "온라인뉴스"
+        },
+        {
+          "code": 3,
+          "label": "방송계열"
+        },
+        {
+          "code": 4,
+          "label": "지역판"
+        },
+        {
+          "code": 5,
+          "label": "팩트체크"
+        },
+        {
+          "code": 6,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "A04",
+      "dimension": "기사 메타데이터",
+      "name": "발행일",
+      "type": "Date",
+      "definition": "기사가 발행된 날짜.",
+      "coding_rule": "기사 본문 날짜를 우선 사용한다. 없으면 아카이브 날짜를 사용하고 메모한다.",
+      "example": "2026-02-09",
+      "allowed_format": "YYYY-MM-DD"
+    },
+    {
+      "variable_id": "A05",
+      "dimension": "기사 메타데이터",
+      "name": "연도",
+      "type": "Numeric",
+      "definition": "발행 연도.",
+      "coding_rule": "발행일에서 추출한다.",
+      "example": "2026",
+      "allowed_format": "2022; 2023; 2024; 2025; 2026"
+    },
+    {
+      "variable_id": "A06",
+      "dimension": "기사 메타데이터",
+      "name": "기사 유형",
+      "type": "Categorical",
+      "definition": "기사의 형식 또는 장르.",
+      "coding_rule": "기사 전체의 주된 형식을 기준으로 한다.",
+      "example": "1 Straight news",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "스트레이트 뉴스"
+        },
+        {
+          "code": 2,
+          "label": "피처/기획"
+        },
+        {
+          "code": 3,
+          "label": "분석/배경"
+        },
+        {
+          "code": 4,
+          "label": "의견/사설"
+        },
+        {
+          "code": 5,
+          "label": "기관발표 보도"
+        },
+        {
+          "code": 6,
+          "label": "팩트체크"
+        },
+        {
+          "code": 7,
+          "label": "영상/방송 스크립트"
+        },
+        {
+          "code": 8,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "A07",
+      "dimension": "기사 메타데이터",
+      "name": "출처 URL",
+      "type": "Text",
+      "definition": "기사 원문 URL.",
+      "coding_rule": "원문 접근에 필요한 경우를 제외하고 전체 URL을 기록한다.",
+      "example": "https://news.detik.com/...",
+      "allowed_format": "URL"
+    },
+    {
+      "variable_id": "A08",
+      "dimension": "기사 메타데이터",
+      "name": "사건군",
+      "type": "Text",
+      "definition": "같은 사건을 다룬 기사들을 묶는 식별자.",
+      "coding_rule": "KH-249-2026처럼 국가-사건-연도 형식을 사용한다.",
+      "example": "KH-249-2026",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "A09",
+      "dimension": "기사 메타데이터",
+      "name": "대상국",
+      "type": "Categorical",
+      "definition": "기사에서 중심이 되는 국가 또는 경유지.",
+      "coding_rule": "여러 국가가 지역적 문제로 함께 다뤄지면 다국가로 코딩한다.",
+      "example": "1 Cambodia",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "캄보디아"
+        },
+        {
+          "code": 2,
+          "label": "미얀마"
+        },
+        {
+          "code": 3,
+          "label": "라오스"
+        },
+        {
+          "code": 4,
+          "label": "필리핀"
+        },
+        {
+          "code": 5,
+          "label": "태국/경유"
+        },
+        {
+          "code": 6,
+          "label": "다국가"
+        },
+        {
+          "code": 7,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "A10",
+      "dimension": "기사 메타데이터",
+      "name": "세부 지역",
+      "type": "Text",
+      "definition": "도시, 국경지역, 컴파운드, 알려진 장소명.",
+      "coding_rule": "보도된 명칭 그대로 기록하고 언급이 없으면 공란으로 둔다.",
+      "example": "Myawaddy; KK Park; Phnom Penh",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "A11",
+      "dimension": "기사 메타데이터",
+      "name": "본문 단어/어절 수",
+      "type": "Numeric",
+      "definition": "기사 본문의 대략적 길이.",
+      "coding_rule": "자동 산출 가능하면 입력하고 아니면 공란으로 둔다.",
+      "example": "850",
+      "allowed_format": "숫자"
+    },
+    {
+      "variable_id": "A12",
+      "dimension": "기사 메타데이터",
+      "name": "검색어",
+      "type": "Text",
+      "definition": "기사를 찾는 데 사용한 검색어.",
+      "coding_rule": "검색 재현성을 위해 주요 검색어를 기록한다.",
+      "example": "WNI online scam Kamboja",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "B01",
+      "dimension": "문제정의와 프레이밍",
+      "name": "주된 문제정의",
+      "type": "Categorical",
+      "definition": "기사에서 사건을 주로 어떤 문제로 정의하는지.",
+      "coding_rule": "제목, 리드, 본문에서 가장 두드러진 정의를 기준으로 한다.",
+      "example": "2 Human trafficking",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "취업사기"
+        },
+        {
+          "code": 2,
+          "label": "인신매매"
+        },
+        {
+          "code": 3,
+          "label": "온라인 범죄"
+        },
+        {
+          "code": 4,
+          "label": "강제노동"
+        },
+        {
+          "code": 5,
+          "label": "불법/비절차 이주"
+        },
+        {
+          "code": 6,
+          "label": "외교적 보호"
+        },
+        {
+          "code": 7,
+          "label": "범죄 가담"
+        },
+        {
+          "code": 8,
+          "label": "정책 실패"
+        },
+        {
+          "code": 9,
+          "label": "플랫폼 위험"
+        },
+        {
+          "code": 10,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "B02",
+      "dimension": "문제정의와 프레이밍",
+      "name": "지배적 프레임",
+      "type": "Categorical",
+      "definition": "기사 전체를 지배하는 해석틀.",
+      "coding_rule": "여러 프레임이 있으면 기사 전체 논지를 조직하는 프레임을 선택한다.",
+      "example": "7 Victim-offender ambiguity",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "범죄"
+        },
+        {
+          "code": 2,
+          "label": "인신매매"
+        },
+        {
+          "code": 3,
+          "label": "노동착취"
+        },
+        {
+          "code": 4,
+          "label": "이주민 보호"
+        },
+        {
+          "code": 5,
+          "label": "외교 위기"
+        },
+        {
+          "code": 6,
+          "label": "플랫폼 위험"
+        },
+        {
+          "code": 7,
+          "label": "피해자-가해자 경계"
+        },
+        {
+          "code": 8,
+          "label": "정책/거버넌스"
+        },
+        {
+          "code": 9,
+          "label": "휴먼스토리"
+        },
+        {
+          "code": 10,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "B03",
+      "dimension": "문제정의와 프레이밍",
+      "name": "에피소드/주제 프레임",
+      "type": "Categorical",
+      "definition": "기사가 사건을 개별 사례로 다루는지 구조적 문제로 다루는지.",
+      "coding_rule": "에피소드형은 개별 사건 중심, 주제형은 추세·통계·제도·구조 원인을 포함한다.",
+      "example": "2 Thematic",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "에피소드형"
+        },
+        {
+          "code": 2,
+          "label": "주제형"
+        },
+        {
+          "code": 3,
+          "label": "혼합형"
+        }
+      ]
+    },
+    {
+      "variable_id": "B04",
+      "dimension": "문제정의와 프레이밍",
+      "name": "피해 유형 프레임",
+      "type": "Multiple / Text",
+      "definition": "기사에서 강조되는 피해 양상.",
+      "coding_rule": "중요 피해 유형을 모두 기록하거나 필요 시 개별 이진 변수로 분리한다.",
+      "example": "Forced labour; Physical violence",
+      "allowed_codes": [
+        {
+          "code": null,
+          "label": "신체폭력"
+        },
+        {
+          "code": null,
+          "label": "경제적 손실"
+        },
+        {
+          "code": null,
+          "label": "강제노동"
+        },
+        {
+          "code": null,
+          "label": "사망"
+        },
+        {
+          "code": null,
+          "label": "성폭력"
+        },
+        {
+          "code": null,
+          "label": "법적 위험"
+        },
+        {
+          "code": null,
+          "label": "가족 고통"
+        },
+        {
+          "code": null,
+          "label": "없음"
+        },
+        {
+          "code": null,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "C01",
+      "dimension": "주체 명명과 피해자-가해자 경계",
+      "name": "주체 명명",
+      "type": "Categorical",
+      "definition": "기사에서 인도네시아인/WNI를 부르는 주된 명칭.",
+      "coding_rule": "제목과 리드의 명명을 우선한다. 명명이 충돌하면 경계적 주체로 코딩한다.",
+      "example": "8 Ambiguous subject",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "피해자"
+        },
+        {
+          "code": 2,
+          "label": "노동자"
+        },
+        {
+          "code": 3,
+          "label": "이주노동자"
+        },
+        {
+          "code": 4,
+          "label": "피의자"
+        },
+        {
+          "code": 5,
+          "label": "가해자"
+        },
+        {
+          "code": 6,
+          "label": "전직 스캐머"
+        },
+        {
+          "code": 7,
+          "label": "문제적 시민/국민"
+        },
+        {
+          "code": 8,
+          "label": "경계적 주체"
+        },
+        {
+          "code": 9,
+          "label": "행정 대상"
+        },
+        {
+          "code": 10,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "C02",
+      "dimension": "주체 명명과 피해자-가해자 경계",
+      "name": "피해자성 부여",
+      "type": "Categorical",
+      "definition": "기사가 피해자성을 부여·유보·부정하는 방식.",
+      "coding_rule": "공식 발언에서 TPPO 피해자가 아니거나 스캐머라고 할 경우 부정으로 코딩한다.",
+      "example": "4 Mixed",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "명확한 피해자"
+        },
+        {
+          "code": 2,
+          "label": "잠재적/의심 피해자"
+        },
+        {
+          "code": 3,
+          "label": "피해자성 부정"
+        },
+        {
+          "code": 4,
+          "label": "혼합"
+        },
+        {
+          "code": 5,
+          "label": "언급 없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "C03",
+      "dimension": "주체 명명과 피해자-가해자 경계",
+      "name": "가담자성 부여",
+      "type": "Categorical",
+      "definition": "인도네시아인이 범죄 수행 또는 가담과 연결되는지.",
+      "coding_rule": "유죄 여부를 추정하지 말고 기사 속 재현만 코딩한다.",
+      "example": "2 Suspected involvement",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "없음"
+        },
+        {
+          "code": 2,
+          "label": "연루 의심"
+        },
+        {
+          "code": 3,
+          "label": "적극 가담자"
+        },
+        {
+          "code": 4,
+          "label": "전직 스캐머"
+        },
+        {
+          "code": 5,
+          "label": "자발적 참여자"
+        },
+        {
+          "code": 6,
+          "label": "혼합"
+        }
+      ]
+    },
+    {
+      "variable_id": "C04",
+      "dimension": "주체 명명과 피해자-가해자 경계",
+      "name": "강제범죄화 프레임",
+      "type": "Categorical",
+      "definition": "피해자가 스캠 등 범죄 수행을 강요받았다는 점이 제시되는지.",
+      "coding_rule": "강제성과 범죄 수행이 모두 명시되면 명시, 한쪽만 부분적으로 제시되면 암시로 코딩한다.",
+      "example": "1 Present",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "명시"
+        },
+        {
+          "code": 2,
+          "label": "암시"
+        },
+        {
+          "code": 3,
+          "label": "없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "C05",
+      "dimension": "주체 명명과 피해자-가해자 경계",
+      "name": "TPPO/인신매매 언급",
+      "type": "Categorical",
+      "definition": "인신매매/TPPO가 어떻게 언급되는지.",
+      "coding_rule": "TPPO, perdagangan orang, human trafficking이 직접 언급되면 명시로 코딩한다.",
+      "example": "2 Suspected/assessed",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "명시"
+        },
+        {
+          "code": 2,
+          "label": "의심/평가 중"
+        },
+        {
+          "code": 3,
+          "label": "부정/미확인"
+        },
+        {
+          "code": 4,
+          "label": "없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "D01",
+      "dimension": "플랫폼화된 모집",
+      "name": "모집 과정 언급",
+      "type": "Binary",
+      "definition": "기사가 모집 과정을 언급하는지.",
+      "coding_rule": "구인 제안, 모집책, 브로커, SNS, 광고 중 하나라도 언급되면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "D02",
+      "dimension": "플랫폼화된 모집",
+      "name": "모집 경로",
+      "type": "Categorical",
+      "definition": "모집이 이루어진 주된 경로.",
+      "coding_rule": "플랫폼과 브로커가 함께 등장하면 혼합으로 코딩하고 메모에 구체화한다.",
+      "example": "7 Mixed",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "소셜미디어"
+        },
+        {
+          "code": 2,
+          "label": "구인광고"
+        },
+        {
+          "code": 3,
+          "label": "메신저앱"
+        },
+        {
+          "code": 4,
+          "label": "지인/가족"
+        },
+        {
+          "code": 5,
+          "label": "브로커/모집책"
+        },
+        {
+          "code": 6,
+          "label": "업체/에이전시"
+        },
+        {
+          "code": 7,
+          "label": "혼합"
+        },
+        {
+          "code": 8,
+          "label": "불명"
+        }
+      ]
+    },
+    {
+      "variable_id": "D03",
+      "dimension": "플랫폼화된 모집",
+      "name": "플랫폼명",
+      "type": "Multiple / Text",
+      "definition": "기사에 명시된 플랫폼 또는 앱.",
+      "coding_rule": "명시된 플랫폼을 모두 기록한다. media sosial/medsos만 있으면 불특정 SNS로 코딩한다.",
+      "example": "Facebook; Telegram",
+      "allowed_codes": [
+        {
+          "code": null,
+          "label": "Facebook"
+        },
+        {
+          "code": null,
+          "label": "Telegram"
+        },
+        {
+          "code": null,
+          "label": "WhatsApp"
+        },
+        {
+          "code": null,
+          "label": "Instagram"
+        },
+        {
+          "code": null,
+          "label": "TikTok"
+        },
+        {
+          "code": null,
+          "label": "구인포털"
+        },
+        {
+          "code": null,
+          "label": "불특정 SNS"
+        },
+        {
+          "code": null,
+          "label": "없음"
+        },
+        {
+          "code": null,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "D04",
+      "dimension": "플랫폼화된 모집",
+      "name": "플랫폼의 역할",
+      "type": "Categorical",
+      "definition": "기사에서 플랫폼이 어떤 역할로 위치하는지.",
+      "coding_rule": "책임 주체는 플랫폼/광고체계에 명시적으로 책임이나 규제 필요성이 부여될 때만 코딩한다.",
+      "example": "2 Recruitment infrastructure",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "단순 경로"
+        },
+        {
+          "code": 2,
+          "label": "모집 인프라"
+        },
+        {
+          "code": 3,
+          "label": "위험 환경"
+        },
+        {
+          "code": 4,
+          "label": "책임 주체"
+        },
+        {
+          "code": 5,
+          "label": "언급 없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "D05",
+      "dimension": "플랫폼화된 모집",
+      "name": "약속 직무",
+      "type": "Categorical",
+      "definition": "이동 전 약속된 표면 직무.",
+      "coding_rule": "도착 후 실제 노동이 아니라 출국 전 약속 직무를 코딩한다.",
+      "example": "1 Customer service",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "고객서비스"
+        },
+        {
+          "code": 2,
+          "label": "관리자/사무직"
+        },
+        {
+          "code": 3,
+          "label": "마케팅"
+        },
+        {
+          "code": 4,
+          "label": "컴퓨터 운영자"
+        },
+        {
+          "code": 5,
+          "label": "전자상거래 운영자"
+        },
+        {
+          "code": 6,
+          "label": "식당근무"
+        },
+        {
+          "code": 7,
+          "label": "온라인 도박"
+        },
+        {
+          "code": 8,
+          "label": "IT/프로그래밍"
+        },
+        {
+          "code": 9,
+          "label": "일반 해외취업"
+        },
+        {
+          "code": 10,
+          "label": "언급 없음"
+        },
+        {
+          "code": 11,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "D06",
+      "dimension": "플랫폼화된 모집",
+      "name": "약속 혜택/조건",
+      "type": "Multiple / Text",
+      "definition": "모집 과정에서 제시된 매력적 조건.",
+      "coding_rule": "모든 혜택을 기록하고 필요 시 개별 이진 변수로 분리한다.",
+      "example": "High salary; Travel paid",
+      "allowed_codes": [
+        {
+          "code": null,
+          "label": "고임금"
+        },
+        {
+          "code": null,
+          "label": "쉬운 일"
+        },
+        {
+          "code": null,
+          "label": "낮은 자격요건"
+        },
+        {
+          "code": null,
+          "label": "항공권/이동비 제공"
+        },
+        {
+          "code": null,
+          "label": "숙소"
+        },
+        {
+          "code": null,
+          "label": "빠른 출국"
+        },
+        {
+          "code": null,
+          "label": "수수료/커미션"
+        },
+        {
+          "code": null,
+          "label": "언급 없음"
+        },
+        {
+          "code": null,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "D07",
+      "dimension": "플랫폼화된 모집",
+      "name": "목적지/직무 기만",
+      "type": "Categorical",
+      "definition": "약속된 목적지/직무와 실제 목적지/노동이 달랐는지.",
+      "coding_rule": "기사에서 명시적으로 설명된 대비를 기준으로 한다.",
+      "example": "2 Thailand-to-Myanmar",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "기만 보고 없음"
+        },
+        {
+          "code": 2,
+          "label": "태국→미얀마 전환"
+        },
+        {
+          "code": 3,
+          "label": "식당→스캠 전환"
+        },
+        {
+          "code": 4,
+          "label": "캄보디아 일자리→스캠 전환"
+        },
+        {
+          "code": 5,
+          "label": "디지털 직무→스캠 전환"
+        },
+        {
+          "code": 6,
+          "label": "기타"
+        },
+        {
+          "code": 7,
+          "label": "정보 부족"
+        }
+      ]
+    },
+    {
+      "variable_id": "E01",
+      "dimension": "강제 디지털 노동",
+      "name": "실제 노동",
+      "type": "Categorical",
+      "definition": "도착 후 실제 수행 또는 강요된 노동.",
+      "coding_rule": "주요 활동을 코딩하고 복수일 경우 가장 강조된 활동을 선택 후 메모한다.",
+      "example": "1 Online scam",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "온라인 스캠"
+        },
+        {
+          "code": 2,
+          "label": "온라인 도박"
+        },
+        {
+          "code": 3,
+          "label": "로맨스 스캠"
+        },
+        {
+          "code": 4,
+          "label": "투자/가상자산 사기"
+        },
+        {
+          "code": 5,
+          "label": "피싱/고객 유인"
+        },
+        {
+          "code": 6,
+          "label": "자금세탁/지원업무"
+        },
+        {
+          "code": 7,
+          "label": "불명"
+        },
+        {
+          "code": 8,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "E02",
+      "dimension": "강제 디지털 노동",
+      "name": "강제성 지표 존재",
+      "type": "Binary",
+      "definition": "강제 또는 착취 지표가 하나라도 나타나는지.",
+      "coding_rule": "E03~E11 중 하나라도 있으면 1로 코딩한다.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E03",
+      "dimension": "강제 디지털 노동",
+      "name": "여권 압수",
+      "type": "Binary",
+      "definition": "여권 또는 신분서류가 압수·보관되었는지.",
+      "coding_rule": "명시적으로 언급된 경우에만 코딩한다.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E04",
+      "dimension": "강제 디지털 노동",
+      "name": "감금/이동제한",
+      "type": "Binary",
+      "definition": "감금, 경비, 외출금지, 이동제한이 있었는지.",
+      "coding_rule": "컴파운드·사무실 내 감금도 포함한다.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E05",
+      "dimension": "강제 디지털 노동",
+      "name": "장시간 노동",
+      "type": "Binary",
+      "definition": "하루 14~18시간 등 과도한 노동시간이 언급되는지.",
+      "coding_rule": "장시간 노동이 명시 또는 수치로 제시되면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E06",
+      "dimension": "강제 디지털 노동",
+      "name": "폭력/고문",
+      "type": "Binary",
+      "definition": "폭행, 전기고문, 고문, 협박 등이 보도되는지.",
+      "coding_rule": "노동자 또는 가족에 대한 위협도 강제성과 연결되면 포함한다.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E07",
+      "dimension": "강제 디지털 노동",
+      "name": "임금체불/삭감",
+      "type": "Binary",
+      "definition": "임금 미지급, 보류, 삭감, 조작 여부.",
+      "coding_rule": "임금 미지급 또는 삭감이 보도되면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E08",
+      "dimension": "강제 디지털 노동",
+      "name": "채무/몸값/퇴사비",
+      "type": "Binary",
+      "definition": "채무, 몸값, 퇴사비 또는 석방 비용 요구.",
+      "coding_rule": "이동비 상환 요구가 퇴사를 막는 수단이면 포함한다.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E09",
+      "dimension": "강제 디지털 노동",
+      "name": "실적 목표/압박",
+      "type": "Binary",
+      "definition": "노동자에게 목표액, 할당량, 실적 압박이 부과되는지.",
+      "coding_rule": "월 목표액, 피해자 할당, 목표 미달 처벌이면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E10",
+      "dimension": "강제 디지털 노동",
+      "name": "성폭력/성적 착취",
+      "type": "Binary",
+      "definition": "성폭력, 성적 역할 강요, 성적 착취가 보도되는지.",
+      "coding_rule": "명시적 또는 강하게 서술된 경우에만 코딩한다.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "E11",
+      "dimension": "강제 디지털 노동",
+      "name": "디지털 노동 통제",
+      "type": "Binary",
+      "definition": "스크립트, 채팅 매뉴얼, 계정, 앱, 기기, 온라인 감시가 노동 통제에 사용되는지.",
+      "coding_rule": "디지털 도구가 노동관리 또는 스캠 수행의 일부이면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "F01",
+      "dimension": "책임 귀인",
+      "name": "원인 책임 제시 여부",
+      "type": "Binary",
+      "definition": "기사가 문제의 원인 또는 책임 주체를 제시하는지.",
+      "coding_rule": "상황을 초래하거나 가능하게 한 주체/구조가 제시되면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "F02",
+      "dimension": "책임 귀인",
+      "name": "주된 원인 책임",
+      "type": "Categorical",
+      "definition": "스캠센터 편입을 초래하거나 가능하게 한 주된 책임 주체/구조.",
+      "coding_rule": "가장 두드러진 원인을 선택한다. 둘 이상이 동등하게 중요하면 혼합으로 코딩한다.",
+      "example": "4 Platform/job ads",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "개인/WNI"
+        },
+        {
+          "code": 2,
+          "label": "모집책/브로커"
+        },
+        {
+          "code": 3,
+          "label": "스캠 조직"
+        },
+        {
+          "code": 4,
+          "label": "플랫폼/구인광고"
+        },
+        {
+          "code": 5,
+          "label": "인도네시아 정부"
+        },
+        {
+          "code": 6,
+          "label": "수용국 정부"
+        },
+        {
+          "code": 7,
+          "label": "노동시장/불안정성"
+        },
+        {
+          "code": 8,
+          "label": "국제범죄 네트워크"
+        },
+        {
+          "code": 9,
+          "label": "혼합"
+        },
+        {
+          "code": 10,
+          "label": "없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "F03",
+      "dimension": "책임 귀인",
+      "name": "해결 책임 제시 여부",
+      "type": "Binary",
+      "definition": "누가 문제를 해결해야 하는지 제시되는지.",
+      "coding_rule": "해결책, 개입, 처벌, 보호, 감시, 정책대응이 언급되면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "F04",
+      "dimension": "책임 귀인",
+      "name": "주된 해결 책임",
+      "type": "Categorical",
+      "definition": "문제 해결의 주된 책임 주체.",
+      "coding_rule": "주된 해결책 또는 정책행동과 연결된 주체를 코딩한다.",
+      "example": "4 Komdigi",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "경찰"
+        },
+        {
+          "code": 2,
+          "label": "외교부/대사관"
+        },
+        {
+          "code": 3,
+          "label": "KP2MI"
+        },
+        {
+          "code": 4,
+          "label": "Komdigi"
+        },
+        {
+          "code": 5,
+          "label": "플랫폼 기업"
+        },
+        {
+          "code": 6,
+          "label": "ASEAN/국제공조"
+        },
+        {
+          "code": 7,
+          "label": "개인 예방/주의"
+        },
+        {
+          "code": 8,
+          "label": "NGO/국제기구"
+        },
+        {
+          "code": 9,
+          "label": "수용국 당국"
+        },
+        {
+          "code": 10,
+          "label": "혼합"
+        },
+        {
+          "code": 11,
+          "label": "없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "F05",
+      "dimension": "책임 귀인",
+      "name": "플랫폼 책임 가시화 수준",
+      "type": "Categorical",
+      "definition": "플랫폼이 책임 또는 규제 가능한 주체로 제시되는 정도.",
+      "coding_rule": "플랫폼 책임의 비가시화 분석 핵심 변수로, 단순 언급과 구분한다.",
+      "example": "2 Mentioned as channel only",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "부재"
+        },
+        {
+          "code": 2,
+          "label": "단순 경로로만 언급"
+        },
+        {
+          "code": 3,
+          "label": "문제적 인프라"
+        },
+        {
+          "code": 4,
+          "label": "명시적 책임 주체"
+        },
+        {
+          "code": 5,
+          "label": "규제 대상"
+        }
+      ]
+    },
+    {
+      "variable_id": "F06",
+      "dimension": "책임 귀인",
+      "name": "책임 귀인의 방향",
+      "type": "Categorical",
+      "definition": "책임이 개인·제도·구조 중 어디로 향하는지.",
+      "coding_rule": "실업, 불안정 노동, 지역 범죄경제, 플랫폼 생태계가 핵심이면 구조적 책임으로 코딩한다.",
+      "example": "3 Structural",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "개인화"
+        },
+        {
+          "code": 2,
+          "label": "제도/기관 중심"
+        },
+        {
+          "code": 3,
+          "label": "구조적"
+        },
+        {
+          "code": 4,
+          "label": "혼합"
+        },
+        {
+          "code": 5,
+          "label": "모호/없음"
+        }
+      ]
+    },
+    {
+      "variable_id": "F07",
+      "dimension": "책임 귀인",
+      "name": "긴급 대응 요구",
+      "type": "Binary",
+      "definition": "기사가 즉각적 대응 또는 긴급 조치를 요구하는지.",
+      "coding_rule": "segera, mendesak, harus, wajib 등 긴급성이 핵심이면 1.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G01",
+      "dimension": "출처와 목소리",
+      "name": "인도네시아 공식출처 인용",
+      "type": "Binary",
+      "definition": "인도네시아 정부/공공기관 관계자가 인용되는지.",
+      "coding_rule": "Kemlu, KBRI, Polri, KP2MI, Komdigi, 부처, 의회 포함.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G02",
+      "dimension": "출처와 목소리",
+      "name": "경찰 출처 인용",
+      "type": "Binary",
+      "definition": "경찰 또는 범죄수사기관 출처가 인용되는지.",
+      "coding_rule": "Polri, Bareskrim, Polda, 지방경찰, 외국 경찰 포함.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G03",
+      "dimension": "출처와 목소리",
+      "name": "대사관/외교부 출처 인용",
+      "type": "Binary",
+      "definition": "대사관 또는 외교부 출처가 인용되는지.",
+      "coding_rule": "KBRI Phnom Penh, KBRI Yangon, Kemlu RI 포함.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G04",
+      "dimension": "출처와 목소리",
+      "name": "수용국 출처 인용",
+      "type": "Binary",
+      "definition": "캄보디아·미얀마·태국·라오스·필리핀 당국자가 인용되는지.",
+      "coding_rule": "수용국 또는 경유국 당국 출처가 있으면 1.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G05",
+      "dimension": "출처와 목소리",
+      "name": "NGO/국제기구 출처 인용",
+      "type": "Binary",
+      "definition": "NGO 또는 국제기구 출처가 인용되는지.",
+      "coding_rule": "IOM, Amnesty, OHCHR, UNODC, SBMI, 시민사회단체 포함.",
+      "example": "1",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G06",
+      "dimension": "출처와 목소리",
+      "name": "피해자 목소리 인용",
+      "type": "Binary",
+      "definition": "피해자/생존자의 직접 또는 간접 진술이 포함되는지.",
+      "coding_rule": "익명 처리된 피해자 진술도 1로 코딩한다.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G07",
+      "dimension": "출처와 목소리",
+      "name": "가족 목소리 인용",
+      "type": "Binary",
+      "definition": "가족 구성원의 진술이 포함되는지.",
+      "coding_rule": "휴먼스토리·보호 프레임 분석에 활용한다.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G08",
+      "dimension": "출처와 목소리",
+      "name": "모집책/가담자 목소리 인용",
+      "type": "Binary",
+      "definition": "모집책, 피의자, 전직 스캠 노동자의 진술이 인용·재서술되는지.",
+      "coding_rule": "가담자 본인의 진술이 없고 경찰 설명만 있으면 0.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G09",
+      "dimension": "출처와 목소리",
+      "name": "전문가 출처 인용",
+      "type": "Binary",
+      "definition": "학자, 분석가, 변호사, 전문가가 인용되는지.",
+      "coding_rule": "전문성이 명시되지 않은 NGO 활동가는 G05로만 코딩한다.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G10",
+      "dimension": "출처와 목소리",
+      "name": "플랫폼 기업 목소리 인용",
+      "type": "Binary",
+      "definition": "플랫폼 기업의 입장 또는 답변이 인용되는지.",
+      "coding_rule": "플랫폼에 대한 정부 발언이 아니라 기업 입장일 때만 1.",
+      "example": "0",
+      "allowed_codes": [
+        {
+          "code": 0,
+          "label": "아니오"
+        },
+        {
+          "code": 1,
+          "label": "예"
+        }
+      ]
+    },
+    {
+      "variable_id": "G11",
+      "dimension": "출처와 목소리",
+      "name": "주된 출처",
+      "type": "Categorical",
+      "definition": "기사의 해석을 가장 크게 좌우하는 출처.",
+      "coding_rule": "제목, 리드, 인용문에서의 비중을 기준으로 한다.",
+      "example": "2 Police",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "인도네시아 공식출처"
+        },
+        {
+          "code": 2,
+          "label": "경찰"
+        },
+        {
+          "code": 3,
+          "label": "대사관/외교부"
+        },
+        {
+          "code": 4,
+          "label": "피해자"
+        },
+        {
+          "code": 5,
+          "label": "가족"
+        },
+        {
+          "code": 6,
+          "label": "NGO/국제기구"
+        },
+        {
+          "code": 7,
+          "label": "수용국 당국"
+        },
+        {
+          "code": 8,
+          "label": "전문가"
+        },
+        {
+          "code": 9,
+          "label": "기자 서술"
+        },
+        {
+          "code": 10,
+          "label": "기타"
+        }
+      ]
+    },
+    {
+      "variable_id": "H01",
+      "dimension": "근거와 신뢰도",
+      "name": "원문 인용구",
+      "type": "Text",
+      "definition": "코딩 근거가 되는 짧은 원문 표현.",
+      "coding_rule": "짧게 기록하고 긴 기사 전문 복제를 피한다.",
+      "example": "iklan lowongan kerja palsu",
+      "allowed_format": "짧은 인용"
+    },
+    {
+      "variable_id": "H02",
+      "dimension": "근거와 신뢰도",
+      "name": "인용구 번역",
+      "type": "Text",
+      "definition": "원문 인용구의 번역.",
+      "coding_rule": "필요하면 직역보다 의미 중심으로 번역한다.",
+      "example": "가짜 구인광고",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "H03",
+      "dimension": "근거와 신뢰도",
+      "name": "근거 메모",
+      "type": "Text",
+      "definition": "왜 해당 코드가 선택되었는지 설명하는 짧은 메모.",
+      "coding_rule": "애매하거나 여러 프레임이 가능한 경우 활용한다.",
+      "example": "Platform named only as recruitment channel, not as responsible actor.",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "H04",
+      "dimension": "근거와 신뢰도",
+      "name": "코더 확신도",
+      "type": "Categorical",
+      "definition": "코딩 결정에 대한 코더의 확신 정도.",
+      "coding_rule": "기사가 모호하거나 접근이 제한적이거나 스니펫에 의존하면 낮음으로 코딩한다.",
+      "example": "2 Medium",
+      "allowed_codes": [
+        {
+          "code": 1,
+          "label": "높음"
+        },
+        {
+          "code": 2,
+          "label": "중간"
+        },
+        {
+          "code": 3,
+          "label": "낮음"
+        }
+      ]
+    },
+    {
+      "variable_id": "H05",
+      "dimension": "근거와 신뢰도",
+      "name": "코더 ID",
+      "type": "Text",
+      "definition": "코더 식별자.",
+      "coding_rule": "C1, C2처럼 익명화된 ID를 사용한다.",
+      "example": "C1",
+      "allowed_format": "자유기입"
+    },
+    {
+      "variable_id": "H06",
+      "dimension": "근거와 신뢰도",
+      "name": "코딩일",
+      "type": "Date",
+      "definition": "기사를 코딩한 날짜.",
+      "coding_rule": "수집일이 아니라 최종 코딩일을 기록한다.",
+      "example": "2026-07-19",
+      "allowed_format": "YYYY-MM-DD"
+    }
+  ]
+}
