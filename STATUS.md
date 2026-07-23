@@ -70,6 +70,8 @@ seed 120건은 fetch 전 corpus.jsonl과 URL 대조 결과 **겹침 0건**이었
 tier2 8개 매체는 아직 fetch_method 미검증 상태(`config/outlets.yaml`에 `unverified`로만 존재) —
 착수 전 tier1 때와 동일한 라이브 검증(정적 HTTP 가능 여부·CSS 셀렉터) 필요.
 
+`coding_input/coding_sheet_v1.xlsx` 생성 완료, LLM 프리코딩 착수 가능.
+
 ---
 
 ## 백업 / 커밋 기록
