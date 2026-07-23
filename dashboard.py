@@ -136,7 +136,7 @@ elif page == "수집 현황":
         st.plotly_chart(fig2, use_container_width=True)
 
         n_clusters = corpus_df[corpus_df.get("cluster_size", pd.Series(dtype=int)).fillna(1) > 1]
-        n_cluster_ids = n_clusters["event_cluster_candidate"].nunique() if not n_clusters.empty else 0
+        n_cluster_ids = n_clusters["event_cluster"].nunique() if not n_clusters.empty else 0
         st.caption(f"사건군 후보 클러스터: {n_cluster_ids}개 ({len(n_clusters)}건) — '검토 대기' 페이지에서 확인")
 
 
@@ -229,9 +229,9 @@ elif page == "검토 대기":
         st.subheader("사건군 후보 클러스터")
         if "cluster_size" in corpus_df.columns:
             clustered = corpus_df[corpus_df["cluster_size"].fillna(1) > 1].sort_values(
-                "event_cluster_candidate"
+                "event_cluster"
             )
-            for cid, group in clustered.groupby("event_cluster_candidate"):
+            for cid, group in clustered.groupby("event_cluster"):
                 with st.expander(f"{cid} — {len(group)}건"):
                     st.dataframe(
                         group[["article_id", "outlet_norm", "title", "pub_date", "url"]].rename(

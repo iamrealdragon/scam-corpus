@@ -20,6 +20,21 @@ DetectorFactory.seed = 0  # langdetect 결과 재현성 고정
 ROOT = Path(__file__).resolve().parent.parent
 OUTLETS_PATH = ROOT / "config" / "outlets.yaml"
 
+_PUB_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def classify_access_status(word_count: int | None, title: str | None, pub_date: str | None) -> str:
+    """본문 품질 기준 access_status 분류.
+
+    본문추출_자동: 어절수>=120, 제목 존재, 발행일 파싱 성공 — 셋 다 만족해야 한다.
+    검수필요: 위 조건 중 하나라도 미달. '본문 확인'은 사람 검수를 통과한 레코드에만 부여하는
+    값이라 자동 파이프라인에서는 쓰지 않는다.
+    """
+    date_ok = bool(pub_date) and bool(_PUB_DATE_RE.match(str(pub_date))) and str(pub_date) != "1970-01-01"
+    if (word_count or 0) >= 120 and bool(title) and date_ok:
+        return "본문추출_자동"
+    return "검수필요"
+
 
 @dataclass
 class ExtractResult:
@@ -31,6 +46,7 @@ class ExtractResult:
     outlet_key: str | None
     extraction_method: str
     access_status: str
+    byline: str | None = None
 
 
 def load_outlets(path: Path = OUTLETS_PATH) -> dict:
@@ -93,6 +109,46 @@ def _extract_body_by_selector(soup: BeautifulSoup, selector: str) -> str | None:
     return text if text else None
 
 
+def _extract_byline(soup: BeautifulSoup) -> str:
+    """ld+json author -> meta author -> 흔한 byline 클래스 순으로 시도, 없으면 빈 문자열."""
+    for tag in soup.find_all("script", attrs={"type": "application/ld+json"}):
+        if not tag.string:
+            continue
+        try:
+            data = json.loads(tag.string)
+        except (json.JSONDecodeError, TypeError):
+            continue
+        items = data if isinstance(data, list) else [data]
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            author = item.get("author")
+            if isinstance(author, dict) and author.get("name"):
+                return author["name"].strip()
+            if isinstance(author, list) and author:
+                first = author[0]
+                if isinstance(first, dict) and first.get("name"):
+                    return first["name"].strip()
+                if isinstance(first, str):
+                    return first.strip()
+            if isinstance(author, str) and author.strip():
+                return author.strip()
+
+    for attrs in ({"name": "author"}, {"property": "article:author"}):
+        meta = soup.find("meta", attrs=attrs)
+        if meta and meta.get("content"):
+            return meta["content"].strip()
+
+    for cls in ["detail__author", "author-name", "read-page--header--author", "byline", "penulis"]:
+        el = soup.find(class_=re.compile(cls))
+        if el:
+            text = el.get_text(strip=True)
+            if text:
+                return text
+
+    return ""
+
+
 def extract_article(html: str, url: str, outlets: dict | None = None) -> ExtractResult:
     outlets = outlets or load_outlets()
     outlet_key = match_outlet(url, outlets)
@@ -152,6 +208,7 @@ def extract_article(html: str, url: str, outlets: dict | None = None) -> Extract
             lang = None
 
     access_status = "본문 확인" if body_text else "접근 제한"
+    byline = _extract_byline(soup)
 
     return ExtractResult(
         title=title,
@@ -162,6 +219,7 @@ def extract_article(html: str, url: str, outlets: dict | None = None) -> Extract
         outlet_key=outlet_key,
         extraction_method=method,
         access_status=access_status,
+        byline=byline,
     )
 
 

@@ -34,7 +34,7 @@ def cluster_candidates(
 ) -> list[dict]:
     """제목 유사도 + 발행일 근접성으로 사건군 후보를 묶는다.
 
-    articles의 각 dict에 'event_cluster_candidate' 필드를 추가해 반환한다.
+    articles의 각 dict에 'event_cluster' 필드를 AUTO- 접두 값으로 채워 반환한다.
     최종 사건군 코드(KH-249-2026 등)는 사람이 검토 후 확정한다.
     """
     from datetime import datetime
@@ -68,7 +68,7 @@ def cluster_candidates(
 
     for cluster_idx, indices in enumerate(clusters):
         for i in indices:
-            articles[i]["event_cluster_candidate"] = f"AUTO-{cluster_idx:03d}"
+            articles[i]["event_cluster"] = f"AUTO-{cluster_idx:03d}"
             articles[i]["cluster_size"] = len(indices)
 
     return articles
