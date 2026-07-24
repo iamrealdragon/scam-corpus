@@ -72,6 +72,8 @@ tier2 8개 매체는 아직 fetch_method 미검증 상태(`config/outlets.yaml`�
 
 `coding_input/coding_sheet_v1.xlsx` 생성 완료, LLM 프리코딩 착수 가능.
 
+LLM 프리코딩 1차 완료 (성공 378/418), 사람 2인 α 표본 추출 대기.
+
 ---
 
 ## 백업 / 커밋 기록
